@@ -1,0 +1,44 @@
+@import './common/styles.scss';
+
+
+$theme-name: 'poba';
+
+$primary-color: #0072A3;
+$highlight-color: #79C6E6;
+
+$primary-palette: (
+  50: #79c6e6,
+  100: #64bfe6,
+  200: #39b3e8,
+  300: #11a6e6,
+  400: #078dc6,
+  500: #0072a3,
+  600: #005579,
+  700: #00374f,
+  800: #001a25,
+  900: black,
+  A100: #4cb7e6,
+  A200: #23b7e8,
+  A400: #0098d9,
+  A700: #005073,
+  contrast: $contrast,
+  background-color: #fafafa,
+  warn-color: #DB2100,
+);
+
+$main-primary: get-main-color($primary-palette);
+$selection-background: get-selection-background($primary-palette);
+$table-hover-color: get-table-hover-color($main-primary);
+$background-color: get-background-color($primary-palette);
+
+$warn-color: map-get($primary-palette, warn-color);
+
+:root {
+  --main-primary: #{$main-primary};
+  --selection-background: #{$selection-background};
+  --table-hover-color: #{$table-hover-color};
+  --warn-color: #{$warn-color};
+  --background-color: #{$background-color};
+}
+
+@include build-custom-theme($primary-palette);
