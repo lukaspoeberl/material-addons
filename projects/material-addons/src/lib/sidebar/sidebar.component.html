@@ -1,8 +1,10 @@
-<div class="sidebar-wrapper" [class.collapsed]="collapsed">
+<div [class.collapsed]="collapsed" class="sidebar-wrapper">
   <div class="sidebar-header">
-    <button mat-button color="basic" (click)="toggleCollapse()"><mat-icon>{{collapsed?'keyboard_double_arrow_right':'keyboard_double_arrow_left'}}</mat-icon></button>
+    <button (click)="toggleCollapse()" color="basic" mat-button>
+      <mat-icon>{{collapsed ? 'keyboard_double_arrow_right' : 'keyboard_double_arrow_left'}}</mat-icon>
+    </button>
   </div>
   <div class="item-list">
-  <ng-content></ng-content>
+    <ng-content></ng-content>
   </div>
 </div>

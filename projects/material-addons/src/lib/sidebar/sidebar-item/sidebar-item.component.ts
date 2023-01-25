@@ -4,7 +4,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
   selector: '[mad-sidebar-item]',
   templateUrl: 'sidebar-item.component.html',
   styleUrls: ['sidebar-item.component.scss'],
-  encapsulation:ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None
 })
 export class SidebarItemComponent {
 }

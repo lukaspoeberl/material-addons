@@ -2,9 +2,8 @@ $color-gray: #707070;
 $color-border: #cccccc;
 
 .sidebar-wrapper {
-  min-height: calc(100vh - 128px);
   background: #E8E8E8;
-  height: 100%;
+  min-height: 100%;
   display: flex;
   flex-direction: column;
   border-right: 1px solid $color-border;
@@ -40,9 +39,6 @@ $color-border: #cccccc;
     flex-direction: column;
     margin-top: 16px;
 
-    .item {
-      padding: 9px 24px 8px;
-    }
   }
 
 }

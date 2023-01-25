@@ -11,7 +11,7 @@
 
   letter-spacing: 0.5px;
 
-  .focus-overlay{
+  .focus-overlay {
     top: 0;
     left: 0;
     right: 0;
@@ -20,15 +20,17 @@
     pointer-events: none;
     border-radius: inherit;
   }
-  &.active-sidebar-item{
+
+  &.active-sidebar-item {
     background-color: white;
   }
-  &:hover{
+
+  &:hover {
     color: #2e2e2e;
-    .focus-overlay{
+
+    .focus-overlay {
       background-color: black;
       opacity: .04;
-
     }
   }
 

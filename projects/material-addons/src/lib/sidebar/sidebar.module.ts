@@ -6,7 +6,6 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatButtonModule } from "@angular/material/button";
 
 
-
 @NgModule({
   declarations: [
     SidebarComponent,
@@ -22,4 +21,5 @@ import { MatButtonModule } from "@angular/material/button";
     MatButtonModule
   ]
 })
-export class SidebarModule { }
+export class SidebarModule {
+}
