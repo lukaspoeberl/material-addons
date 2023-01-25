@@ -7,7 +7,7 @@ import { exampleColumns } from '../data-table-example-data/data-table-example-co
 @Component({
   selector: 'app-data-table-single',
   templateUrl: './data-table-single.component.html',
-  styleUrls: ['./data-table-single.component.scss'],
+  styleUrls: ['./data-table-single.component.scss','../../flex-utility.scss'],
 })
 export class DataTableSingleComponent {
   paginationEnabled = true;

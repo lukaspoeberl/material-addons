@@ -5,11 +5,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { NgModule } from '@angular/core';
 import { CdkStepperModule } from '@angular/cdk/stepper';
-import { FlexModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [StepperComponent, StepHeaderComponent, StepComponent],
-  imports: [CommonModule, MatButtonModule, MatIconModule, CdkStepperModule, FlexModule],
+  imports: [CommonModule, MatButtonModule, MatIconModule, CdkStepperModule],
   exports: [StepperComponent, StepHeaderComponent, StepComponent],
 })
 export class StepperModule {}

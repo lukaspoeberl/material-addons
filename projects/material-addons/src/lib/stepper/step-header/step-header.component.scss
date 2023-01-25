@@ -2,11 +2,15 @@
   overflow: hidden;
   outline: var(--warn-color);
   cursor: pointer;
-  box-sizing: content-box;
   -webkit-tap-highlight-color: transparent;
   border: 1px solid lightgrey;
   width: 100%;
   height: 62px;
+
+  flex-direction: row;
+  box-sizing: border-box;
+  display: flex;
+  gap: 1em;
 }
 
 .header-label {

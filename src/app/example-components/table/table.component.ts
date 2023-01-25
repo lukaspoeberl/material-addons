@@ -6,7 +6,7 @@ import { users } from './data';
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
-  styleUrls: ['./table.component.scss'],
+  styleUrls: ['./table.component.scss','../../flex-utility.scss'],
 })
 export class TableComponent {
   paginationEnabled = true;

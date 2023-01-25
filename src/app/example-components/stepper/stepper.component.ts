@@ -4,7 +4,7 @@ import {UntypedFormControl, UntypedFormGroup, Validators} from '@angular/forms';
 @Component({
   selector: 'app-stepper',
   templateUrl: './stepper.component.html',
-  styleUrls: ['./stepper.component.scss'],
+  styleUrls: ['./stepper.component.scss', '../../flex-utility.scss'],
 })
 export class StepperComponent implements OnInit {
   @Input() linear: boolean = true;

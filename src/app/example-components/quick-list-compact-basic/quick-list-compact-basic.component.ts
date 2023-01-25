@@ -9,10 +9,10 @@ interface QuickListDemoItem extends QuickListItem {
 @Component({
   selector: 'app-quick-list-compact',
   templateUrl: './quick-list-compact-basic.component.html',
-  styleUrls: ['./quick-list-compact-basic.component.scss'],
+  styleUrls: ['./quick-list-compact-basic.component.scss', '../../flex-utility.scss'],
 })
 export class QuickListCompactBasicComponent {
-  items = [{ id: '1' } as QuickListDemoItem];
+  items: QuickListDemoItem[] = [{ id: '1', firstName: '', lastName: '' }];
   textIsEditable = true;
 
   // eslint-disable-next-line

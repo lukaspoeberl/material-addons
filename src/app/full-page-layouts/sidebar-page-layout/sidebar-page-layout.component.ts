@@ -5,7 +5,7 @@ import { Location } from "@angular/common";
 @Component({
   selector: 'app-sidebar-page-layout',
   templateUrl: './sidebar-page-layout.component.html',
-  styleUrls: ['./sidebar-page-layout.component.scss','../../fx-utility.scss']
+  styleUrls: ['./sidebar-page-layout.component.scss','../../flex-utility.scss']
 })
 export class SidebarPageLayoutComponent {
 
