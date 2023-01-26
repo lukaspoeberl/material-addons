@@ -1,0 +1,44 @@
+$color-gray: #707070;
+$color-border: #cccccc;
+
+.sidebar-wrapper {
+  background: #E8E8E8;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid $color-border;
+
+  transition: width .1s ease-in;
+
+  &:not(.collapsed) {
+    width: 239px;
+  }
+
+  &.collapsed {
+    width: 64px;
+  }
+
+  .sidebar-header {
+    display: flex;
+    flex-direction: row-reverse;
+    border-bottom: 1px solid $color-border;
+
+    button {
+      color: $color-gray;
+    }
+  }
+
+  &.collapsed {
+    .item-list {
+      display: none;
+    }
+  }
+
+  .item-list {
+    display: flex;
+    flex-direction: column;
+    margin-top: 16px;
+
+  }
+
+}

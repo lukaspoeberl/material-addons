@@ -74,4 +74,43 @@ export class PageLayoutsComponent {
             </mad-content-panel-container-footer>
         </mad-content-panel-container>
     </mad-main-container>`;
+
+  sidebarPageLayout =
+    `<mad-main-container>
+  <mad-content-header>
+    <div class="flex-row align-items-center place-content-center-space-between">
+      <div class="flex-row align-items-center place-content-center gap-1">
+        <button mat-button>
+          <mat-icon color="primary" (click)="goToPreviousPage()">arrow_back</mat-icon>
+        </button>
+        <h2 class="title">Sidebar layout</h2>
+      </div>
+      <div class="flex-row align-items-center place-content-center gap-1">
+        <button mat-button>
+          <mat-icon color="primary">history</mat-icon>
+        </button>
+        <mad-outline-button>Action A</mad-outline-button>
+        <mad-outline-button>Action B</mad-outline-button>
+      </div>
+    </div>
+  </mad-content-header>
+  <mad-content-panel-container>
+
+    <mad-content-panel-container-sidebar>
+      <mad-sidebar>
+        <a mad-sidebar-item routerLink="/full-page-layouts/sidebar-page-layout/1" routerLinkActive="active">item 1</a>
+        <a mad-sidebar-item routerLink="/full-page-layouts/sidebar-page-layout/2" routerLinkActive="active">item 2</a>
+        <a mad-sidebar-item href="#">A very very long name is here</a>
+
+      </mad-sidebar>
+    </mad-content-panel-container-sidebar>
+    <mad-content-panel-container-content>
+      <!--<router-outlet></router-outlet>-->
+      <p>Define the page content here</p>
+    </mad-content-panel-container-content>
+
+  </mad-content-panel-container>
+</mad-main-container>
+`;
+
 }
