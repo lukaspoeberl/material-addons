@@ -5,7 +5,7 @@ import { Location } from '@angular/common';
 @Component({
   selector: 'app-base-page-layout',
   templateUrl: './base-page-layout.component.html',
-  styleUrls: ['./base-page-layout.component.scss']
+  styleUrls: ['./base-page-layout.component.scss','../../flex-utility.scss']
 })
 export class BasePageLayoutComponent {
   constructor(private router: Router, private location: Location) {}

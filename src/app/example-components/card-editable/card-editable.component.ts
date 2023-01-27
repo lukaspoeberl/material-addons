@@ -5,7 +5,7 @@ import {delay, finalize} from 'rxjs/operators';
 @Component({
   selector: 'app-card-editable',
   templateUrl: './card-editable.component.html',
-  styleUrls: ['./card-editable.component.scss'],
+  styleUrls: ['./card-editable.component.scss', '../../flex-utility.scss'],
 })
 export class CardEditableComponent {
   isInEditMode = false;

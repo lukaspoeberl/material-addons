@@ -7,7 +7,7 @@ import { exampleColumns } from '../data-table-example-data/data-table-example-co
 @Component({
   selector: 'app-data-table-id-generator',
   templateUrl: './data-table-id-generator.component.html',
-  styleUrls: ['./data-table-id-generator.component.scss'],
+  styleUrls: ['./data-table-id-generator.component.scss','../../flex-utility.scss'],
 })
 export class DataTableIdGeneratorComponent {
   paginationEnabled = true;

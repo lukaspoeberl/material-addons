@@ -9,8 +9,8 @@ export class PageLayoutsComponent {
   basePageLayout =
     `<mad-main-container>
         <mad-content-header>
-          <div fxLayout="row" fxLayoutAlign="space-between center">
-            <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="1em">
+          <div class="flex-row align-items-center place-content-center-space-between">
+            <div class="flex-row align-items-center place-content-center gap-1">
               <button mat-button>
                 <mat-icon color="primary">arrow_back</mat-icon>
               </button>
@@ -22,7 +22,7 @@ export class PageLayoutsComponent {
           <mad-content-panel-container-content>
             <p>Define the page content here</p>
           </mad-content-panel-container-content>
-          <mad-content-panel-container-footer fxLayoutAlign="space-between center">
+          <mad-content-panel-container-footer class="flex-row align-items-center place-content-center-space-between">
             <p>Footer here</p>
           </mad-content-panel-container-footer>
        </mad-content-panel-container>
@@ -31,13 +31,14 @@ export class PageLayoutsComponent {
   flowBarLayout = `
     <mad-main-container>
         <mad-content-header>
-            <div fxLayout="row" fxLayoutAlign="space-between center">
-                <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="1em">
+            <div class="flex-row align-items-center place-content-center-space-between">
+                <div class="flex-row align-items-center place-content-center gap-1">
                     <button mat-button>
                         <mat-icon color="primary">arrow_back</mat-icon>
                     </button>
                     <h2 class="title">Flow Bar layout</h2>
                 </div>
+            </div>
         </mad-content-header>
         <mad-flowbar #flowBar [steps]="steps" [activeStep]="activeStep" (activeStepChange)="activeStepChanged($event)"
         (headerClick)="selectStep($event)">
@@ -62,8 +63,8 @@ export class PageLayoutsComponent {
                 Lorem ipsum dolor sit amet.
             </p>
             </mad-content-panel-container-content>
-            <mad-content-panel-container-footer fxLayoutAlign="space-between center">
-                <div fxLayout="row" fxLayoutGap="1em">
+            <mad-content-panel-container-footer class="flex-row align-items-center place-content-center-space-between">
+                <div class="flex-row gap-1">
                     <mad-outline-button (click)="flowBar.previous()" *ngIf="flowBar.isPreviousAvailable()">
                         Previous
                     </mad-outline-button>

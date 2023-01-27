@@ -4,7 +4,8 @@ import { BaseQuickListComponent, QuickListItem } from '../base-quick-list.compon
 @Component({
   selector: 'mad-quick-list-compact',
   templateUrl: './quick-list-compact.component.html',
-  styleUrls: [],
+  styles: [`.quick-list-row{flex-direction: row; box-sizing: border-box; display: flex}`],
+
 })
 export class QuickListCompactComponent extends BaseQuickListComponent<QuickListItem> {
   constructor(public changeDetectorRef: ChangeDetectorRef) {

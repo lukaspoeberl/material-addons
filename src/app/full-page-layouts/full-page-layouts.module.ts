@@ -18,7 +18,6 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatCardModule } from '@angular/material/card';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
@@ -32,17 +31,14 @@ import {
   FlowbarModule,
   NumericFieldModule,
   QuickListModule,
+  SidebarModule,
   TableModule,
   ThrottleClickModule
 } from 'material-addons';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ContentPanelModule } from '../../../projects/material-addons/src/lib/content-panel/content-panel.module';
 import { FlowbarPageLayoutComponent } from './flowbar-page-layout/flowbar-page-layout.component';
-
-import { SidebarModule } from 'material-addons';
-import {
-  SidebarPageLayoutComponent
-} from "./sidebar-page-layout/sidebar-page-layout.component";
+import { SidebarPageLayoutComponent } from "./sidebar-page-layout/sidebar-page-layout.component";
 import { ExamplePageOneComponent } from './example-page-one/example-page-one.component';
 import { ExamplePageTwoComponent } from './example-page-two/example-page-two.component';
 
@@ -66,7 +62,6 @@ import { ExamplePageTwoComponent } from './example-page-two/example-page-two.com
     MatTooltipModule,
     MatSnackBarModule,
     MatCardModule,
-    FlexLayoutModule,
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
@@ -74,7 +69,6 @@ import { ExamplePageTwoComponent } from './example-page-two/example-page-two.com
     MatDatepickerModule,
     PortalModule,
     MatTabsModule,
-    FlexLayoutModule,
     NumericFieldModule.forRoot(),
     CardModule,
     MatProgressSpinnerModule,

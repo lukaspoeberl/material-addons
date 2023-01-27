@@ -27,7 +27,7 @@
       <mat-spinner *ngIf="isLoading"></mat-spinner>
     </div>
 
-    <div fxFlex fxLayout="column" fxLayoutAlign="center start" fxFill>
+    <div class="flex-column place-content-flex-start-center align-items-flex-start w-full h-full">
       <mad-readonly-form-field-wrapper [readonly]="!isInEditMode" [value]="firstName" style="text-overflow: ellipsis">
         <mat-label>First Name</mat-label>
         <mat-form-field class="form-group">

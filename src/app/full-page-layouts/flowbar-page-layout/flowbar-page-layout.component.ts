@@ -6,7 +6,7 @@ import { Location } from '@angular/common';
 @Component({
   selector: 'app-flowbar-page-layout',
   templateUrl: './flowbar-page-layout.component.html',
-  styleUrls: ['./flowbar-page-layout.component.scss'],
+  styleUrls: ['./flowbar-page-layout.component.scss', '../../flex-utility.scss'],
 })
 export class FlowbarPageLayoutComponent implements OnInit {
   steps: IStep[];
