@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
 })
 export class PageLayoutsComponent {
   basePageLayout =
-    `<mad-main-container>
+    `<mad-main-container class="w-full">
         <mad-content-header>
           <div class="flex-row align-items-center place-content-center-space-between">
             <div class="flex-row align-items-center place-content-center gap-1">

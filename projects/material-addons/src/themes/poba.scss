@@ -1,10 +1,8 @@
-@import './common/styles.scss';
-
+@use './common/styles' as common;
+@use './common/theme' as theme;
+@use '@angular/material' as mat;
 
 $theme-name: 'poba';
-
-$primary-color: #0072A3;
-$highlight-color: #79C6E6;
 
 $primary-palette: (
   50: #79c6e6,
@@ -21,24 +19,14 @@ $primary-palette: (
   A200: #23b7e8,
   A400: #0098d9,
   A700: #005073,
-  contrast: $contrast,
+  contrast: common.$contrast,
   background-color: #fafafa,
   warn-color: #DB2100,
 );
 
-$main-primary: get-main-color($primary-palette);
-$selection-background: get-selection-background($primary-palette);
-$table-hover-color: get-table-hover-color($main-primary);
-$background-color: get-background-color($primary-palette);
+@include mat.core();
 
-$warn-color: map-get($primary-palette, warn-color);
+$custom-theme: theme.build-custom-theme($theme-name, $primary-palette, common.$default-palette);
 
-:root {
-  --main-primary: #{$main-primary};
-  --selection-background: #{$selection-background};
-  --table-hover-color: #{$table-hover-color};
-  --warn-color: #{$warn-color};
-  --background-color: #{$background-color};
-}
-
-@include build-custom-theme($primary-palette);
+@include mat.all-component-themes($custom-theme);
+@include common.theme($theme-name, $custom-theme);

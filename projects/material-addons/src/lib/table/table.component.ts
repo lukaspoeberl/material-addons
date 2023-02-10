@@ -1,9 +1,9 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort, Sort } from '@angular/material/sort';
-import { ColumnHeader } from './column-header';
-import { TableAction } from './table-action';
+import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {MatTableDataSource} from '@angular/material/table';
+import {MatPaginator} from '@angular/material/paginator';
+import {MatSort, Sort} from '@angular/material/sort';
+import {ColumnHeader} from './column-header';
+import {TableAction} from './table-action';
 
 @Component({
   selector: 'mad-table',
@@ -24,8 +24,8 @@ export class TableComponent implements OnInit, AfterViewInit {
   @Output() rowAction = new EventEmitter<TableAction>();
   @Output() sortEvent = new EventEmitter<Sort>();
 
-  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   readonly ACTION_COLUMN_NAME = '__action__';
   dataSource: MatTableDataSource<any[]>;
@@ -48,7 +48,7 @@ export class TableComponent implements OnInit, AfterViewInit {
     // eslint-disable-next-line
     const pageSize = this.isPaginationEnabled ? this.defaultPageSize : Number.MAX_VALUE;
     if (this.dataSource.paginator) {
-      this.dataSource.paginator._changePageSize(pageSize);
+      this.dataSource.paginator.pageSize = pageSize;
     }
   }
 
@@ -82,7 +82,7 @@ export class TableComponent implements OnInit, AfterViewInit {
 
   onRowEvent(event: MouseEvent, row: any, action = this.defaultAction): void {
     if (!!action && !this.isClickOnRowMenuIcon(event)) {
-      this.rowAction.emit({ ...action, outputRow: row });
+      this.rowAction.emit({...action, outputRow: row});
     }
   }
 

@@ -1,12 +1,11 @@
 $color-gray: #707070;
-$color-border: #cccccc;
 
 .sidebar-wrapper {
-  background: #E8E8E8;
+  background: var(--panel-background-color);
   min-height: 100%;
   display: flex;
   flex-direction: column;
-  border-right: 1px solid $color-border;
+  border-right: 1px solid var(--panel-border-color);
 
   transition: width .1s ease-in;
 
@@ -21,7 +20,7 @@ $color-border: #cccccc;
   .sidebar-header {
     display: flex;
     flex-direction: row-reverse;
-    border-bottom: 1px solid $color-border;
+    border-bottom: 1px solid var(--panel-border-color);
 
     button {
       color: $color-gray;

@@ -1,13 +1,12 @@
-
 [mad-sidebar-item] {
   padding: 9px 24px 8px;
-  color: #333333;
+  color: var(--panel-color);
   position: relative;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-
-  font: 500 16px / 24px Roboto, "Helvetica Neue", sans-serif;
+  font-size: 16px;
+  font-weight: 100;
 
   letter-spacing: 0.5px;
 
@@ -22,12 +21,10 @@
   }
 
   &.active-sidebar-item {
-    background-color: white;
+    background-color: var(--panel-select-background);
   }
 
   &:hover {
-    color: #2e2e2e;
-
     .focus-overlay {
       background-color: black;
       opacity: .04;

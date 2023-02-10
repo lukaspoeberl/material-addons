@@ -1,18 +1,18 @@
-@use '@angular/material' as mat;
-@import 'styles';
+@use 'styles';
+@use '@porscheinformatik/material-addons/themes/common/theme';
 
 .mat-list-item {
   color: #737373;
 }
 
 .active-link {
-  background: mat.get-color-from-palette($primary-palette, 50);
-  color: mat.get-color-from-palette($primary-palette, 900);
+  background: map-get(theme.$primary-palette, 50);
+  color: map-get(theme.$primary-palette, 900);
 }
 
 .active-parent-link {
   background: #fafafa;
-  color: mat.get-color-from-palette($primary-palette, 900);
+  color: map-get(theme.$primary-palette, 900);
 }
 
 .space-icon {
