@@ -1,20 +1,38 @@
-#!/usr/bin/env
-// This jenkins pipeline builds the snapshot version for master and release branches and makes the verify build for PR.
-// In case of snapshot the artifact and image is uploaded.
-@Library('financialservices') _
+pipeline {
 
-mailNotificationParams = [ emailAddress: "lukas.poeberl@porscheinformatik.com"
-                         ]
+    agent {
+        docker {
+            image 'docker.porscheinformatik.com/eenv/builders/default'
+            args '-v /var/run/docker.sock:/var/run/docker.sock -v /srv/jenkins/.docker:/home/jenkins/.docker'
+            alwaysPull true
+        }
+    }
 
-pipelineParams = [ buildFolder: '',
-                   cronTrigger: '@weekly',
-                   jdkVersion: 'jdk-17',
-                   additionalParams: '',
-                   dockerEnabled: true,
-                   sendErrorNotification: false,
-                   failureNotification: [],
-                   failureEmailNotification: mailNotificationParams,
-                   dockerPushPRBranch: true
-]
+    options {
+        ansiColor('xterm')
+        disableConcurrentBuilds()
+    }
 
-moduleBuildPipeline(pipelineParams)
+    environment {
+        CARFIN_NPM_TOKEN = credentials('CARFIN_NPM_TOKEN')
+    }
+
+    stages {
+        stage('Install Deps') {
+            steps {
+                sh 'npm install'
+            }
+        }
+        stage('Publish') {
+            steps {
+                ansiColor('xterm') {
+                    sh """
+                    npm run build:mat-add
+                    npm publish ./dist/material-addons
+                """
+                }
+            }
+        }
+
+    }
+}
