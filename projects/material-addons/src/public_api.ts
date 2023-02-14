@@ -11,11 +11,6 @@ export * from './lib/readonly/readonly-form-field.module';
 export * from './lib/readonly/readonly-form-field-wrapper/readonly-form-field-wrapper.component';
 export * from './lib/readonly/readonly-form-field/readonly-form-field.component';
 
-export * from './lib/toolbar/toolbar.module';
-export * from './lib/toolbar/toolbar.component';
-export * from './lib/toolbar/toolbar.service';
-export * from './lib/toolbar/toolbar-action.interface';
-
 export * from './lib/numeric-field/numeric-field';
 export * from './lib/numeric-field/numeric-field.module';
 export * from './lib/numeric-field/number-format.service';
@@ -48,11 +43,22 @@ export * from './lib/content-panel/content-panel-container-sidebar/content-panel
 export * from './lib/content-panel/main-container/main-container.component';
 export * from './lib/content-panel/content-panel.module';
 
-export * from './lib/flowbar/flowbar.component';
-export * from './lib/flowbar/flowbar.module';
+export * from './lib/layout/flowbar/flowbar.component';
+export * from './lib/layout/flowbar/flowbar.module';
 
-export * from './lib/sidebar/sidebar.component';
-export * from './lib/sidebar/sidebar-item/sidebar-item.component';
-export * from './lib/sidebar/sidebar.module';
+export * from './lib/layout/sidebar/sidebar.component';
+export * from './lib/layout/sidebar/sidebar-item/sidebar-item.component';
+export * from './lib/layout/sidebar/sidebar.module';
+
+export * from './lib/layout/toolbar/toolbar.module';
+export * from './lib/layout/toolbar/toolbar.component';
+export * from './lib/layout/toolbar/toolbar.service';
+export * from './lib/layout/toolbar/toolbar-action.interface';
+
+export * from './lib/layout/action-bar/action-bar-layout.component';
+export * from './lib/layout/action-bar/action-bar-layout.module';
+
+export * from './lib/layout/action-group/action-group.component';
+export * from './lib/layout/action-group/action-group.module';
 
 export * from './lib/material-addons.module';

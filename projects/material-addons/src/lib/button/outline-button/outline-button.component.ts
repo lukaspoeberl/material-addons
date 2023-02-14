@@ -4,7 +4,7 @@ import { MadBasicButton } from '../mad-basic-button';
 @Component({
   selector: 'mad-outline-button',
   templateUrl: './outline-button.component.html',
-  styleUrls: ['./outline-button.component.css'],
+  styleUrls: ['./outline-button.component.scss'],
 })
 export class OutlineButtonComponent extends MadBasicButton {
   @Input()

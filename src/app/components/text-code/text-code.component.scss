@@ -1,7 +1,7 @@
-@import 'styles';
+@use 'styles';
 
 code {
-  color: $main-primary;
+  color: var(--main-primary);
 }
 
 pre {

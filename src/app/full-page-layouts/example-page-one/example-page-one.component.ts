@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./example-page-one.component.scss']
 })
 export class ExamplePageOneComponent {
-
+  value = 'Clear me';
 }
