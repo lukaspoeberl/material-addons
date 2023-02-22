@@ -10,10 +10,20 @@
 ### Use Jenkins / Arifactory
 If you just want to use the current fork lib version you can use the version that is pushed to the POI Artifactory:
 
-But that mean:
- - Whenever an update is required make sure you execute the Jenkins build-job to build and publish the artifact into the POI npm repo:
-https://build.porscheinformatik.com/jenkins/job/FS/job/carCAT/job/carCAT-material-addons/
- - make sure the version number matches the current version number used in the package.json
+#### Publish to POI Artifactory
+
+Increase the version number (you can not publish an already existing version) in
+
+```projects/material-addons/package.json```
+
+Execute the following steps:
+
+```
+export/set CARFIN_NPM_TOKEN=xxx
+npm install
+npm run build:mat-add
+npm publish ./dist/material-addons
+```
 
 ### use local development version
 
@@ -35,4 +45,20 @@ Start the addons as a developer:
 When the time comes to merge back our changes to the official repo, the following files should NOT be merged back:
 
 - do not merge the Jenkins folder and the pom.xml (that is just required for the npm push into the Artifactory)
-- do not include the copyToCarcat script (package.json)
+- do not include the copyToCarcat/deploy script (package.json)
+- change the npmrc back to the public rNPM-repo (or just du not merge)
+
+# Misc
+I had several problems pushing the addons to the POI Artifactory. Putting the following lines 
+to the ```.npmrc``` made it work locally:
+
+```
+@porscheinformatik:registry=https://artifactory.porscheinformatik.com/artifactory/api/npm/npm-carfin/
+//artifactory.porscheinformatik.com/artifactory/api/npm/npm-carfin/:always-auth true
+/artifactory.porscheinformatik.com/artifactory/api/npm/npm-carfin/:_authToken $CARFIN_NPM_TOKEN
+```
+
+I also tried the same thing with a build-job on Jenkins. But for some reason there is always a problem with the token.
+I also tried the put it as npm config (as we did for Global-Services or Carin), but no success.
+(see Jenkins folder for one of the last tries and Jenkins build-job: 
+https://build.porscheinformatik.com/jenkins/job/FS/job/carcat/job/carCAT_material_addons )

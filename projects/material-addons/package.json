@@ -1,6 +1,6 @@
 {
   "name": "@porscheinformatik/material-addons",
-  "version": "15.0.0",
+  "version": "15.0.5",
   "description": "Custom theme and components for Angular Material",
   "homepage": "https://github.com/porscheinformatik/material-addons",
   "repository": {
@@ -25,9 +25,6 @@
   },
   "author": "porscheinformatik",
   "license": "MIT",
-  "publishConfig": {
-    "registry": "https://artifactory.porscheinformatik.com/artifactory/api/npm/npm-carfin/"
-  },
   "files": [
     "index.d.ts",
     "porscheinformatik-material-addons.d.ts.map",
