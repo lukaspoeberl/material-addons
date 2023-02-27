@@ -1,5 +1,6 @@
-import { Component, ElementRef, Input, ViewChild } from '@angular/core';
-import { MadBasicButton } from '../mad-basic-button';
+import {Component, ElementRef, Input, ViewChild} from '@angular/core';
+import {MadBasicButton} from '../mad-basic-button';
+import {ThemePalette} from '@angular/material/core';
 
 @Component({
   selector: 'mad-outline-button',
@@ -16,7 +17,10 @@ export class OutlineButtonComponent extends MadBasicButton {
   @Input()
   title = '';
 
-  @ViewChild('btn', { read: ElementRef, static: true }) button: ElementRef;
+  @Input()
+  color: ThemePalette = "primary";
+
+  @ViewChild('btn', {read: ElementRef, static: true}) button: ElementRef;
 
   constructor() {
     super();
