@@ -11,7 +11,7 @@
 }
 
 .active-parent-link {
-  background: #fafafa;
+  background: var(--background-color);
   color: map-get(theme.$primary-palette, 900);
 }
 
