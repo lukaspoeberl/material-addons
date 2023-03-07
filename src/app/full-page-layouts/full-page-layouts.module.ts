@@ -26,7 +26,6 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { PortalModule } from '@angular/cdk/portal';
 import { MatTabsModule } from '@angular/material/tabs';
 import {
-    ActionGroupModule,
     ButtonModule,
     CardModule,
     FlowbarModule,
@@ -80,7 +79,6 @@ import { ExamplePageTwoComponent } from './example-page-two/example-page-two.com
         ContentPanelModule,
         FlowbarModule,
         SidebarModule,
-        ActionGroupModule,
     ],
   declarations: [
     FullPageLayoutsComponent,

@@ -58,7 +58,4 @@ export * from './lib/layout/toolbar/toolbar-action.interface';
 export * from './lib/layout/action-bar/action-bar-layout.component';
 export * from './lib/layout/action-bar/action-bar-layout.module';
 
-export * from './lib/layout/action-group/action-group.component';
-export * from './lib/layout/action-group/action-group.module';
-
 export * from './lib/material-addons.module';

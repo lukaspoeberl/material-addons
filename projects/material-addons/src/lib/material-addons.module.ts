@@ -9,7 +9,6 @@ import {ButtonModule} from './button/button.module';
 import {ThrottleClickModule} from './throttle-click/throttle-click.module';
 import {SidebarModule} from "./layout/sidebar/sidebar.module";
 import {ActionBarLayoutModule} from "./layout/action-bar/action-bar-layout.module";
-import {ActionGroupModule} from "./layout/action-group/action-group.module";
 
 @NgModule({
   exports: [
@@ -23,7 +22,6 @@ import {ActionGroupModule} from "./layout/action-group/action-group.module";
     ThrottleClickModule,
     SidebarModule,
     ActionBarLayoutModule,
-    ActionGroupModule
   ],
 })
 export class MaterialAddonsModule {
