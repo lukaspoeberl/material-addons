@@ -1,6 +1,7 @@
 @use './common/styles' as common;
 @use './common/theme' as theme;
 @use '@angular/material' as mat;
+@import 'common/button';
 
 $theme-name: 'poba';
 

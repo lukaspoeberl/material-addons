@@ -78,7 +78,6 @@ import {DataTableBasicComponent} from './example-components/data-table-basic/dat
 import {CardExpandableComponent} from './example-components/card-expandable/card-expandable.component';
 import {ReadOnlyFieldErrorComponent} from './example-components/read-only-field-error/read-only-field-error.component';
 import {QuickListExtendedComponent} from './example-components/quick-list-extended/quick-list-extended.component';
-import {MadButtonsComponent} from './example-components/mad-buttons/mad-buttons.component';
 import {MadButtonsDemoComponent} from './component-demos/mad-buttons-demo/mad-buttons-demo.component';
 import {ThrottleClickComponent} from './example-components/throttle-click/throttle-click.component';
 import {ThrottleClickDemoComponent} from './component-demos/throttle-click-demo/throttle-click-demo.component';
@@ -112,6 +111,8 @@ import {
 } from './example-components/data-table-parent-height/data-table-parent-height.component';
 import {DataTableDevModule} from './dev-components/data-table/data-table-dev.module';
 import {FullPageLayoutsRoutingModule} from "./full-page-layouts/full-page-layouts-routing.module";
+import {MadButtonsComponent} from './example-components/mad-buttons/mad-buttons.component';
+import {MadButtonGroupComponent} from './example-components/mad-button-group/mad-button-group.component';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, './assets/i18n/');
@@ -144,6 +145,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     CardEditableComponent,
     CardReadonlyComponent,
     MadButtonsComponent,
+    MadButtonGroupComponent,
     QuickListDemoComponent,
     QuickListBasicComponent,
     QuickListExtendedComponent,
