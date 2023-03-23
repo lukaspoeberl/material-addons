@@ -3,6 +3,9 @@
 @use '@angular/material/theming' as theming;
 @use './theme';
 
+@import 'material-icons/iconfont/material-icons.css';
+@import 'roboto-fontface/css/roboto/roboto-fontface.css';
+
 @include mat.core();
 
 $contrast: (
