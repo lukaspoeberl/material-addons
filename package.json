@@ -1,5 +1,5 @@
 {
-  "name": "material-addons-project",
+  "name": "carcat-material-addons-project",
   "version": "0.0.0",
   "scripts": {
     "build:all": " npm run build:mat-add && npm run build:demo",
@@ -21,7 +21,7 @@
     "build-and-serve": "npm install && npm run build:mat-add && npm install --no-optional && npm install && ng serve --open",
     "serve": "ng serve",
     "postinstall": "ngcc",
-    "copyToCarcat": "rimraf ../carcat/carcat-frontend/node_modules/@porscheinformatik/* && ncp dist/material-addons ../carcat/carcat-frontend/node_modules/@porscheinformatik/material-addons"
+    "copyToCarcat": "rimraf ../carcat/carcat-frontend/node_modules/@carcat/* && ncp dist/material-addons ../carcat/carcat-frontend/node_modules/@carcat/material-addons"
   },
   "private": true,
   "dependencies": {
@@ -64,7 +64,7 @@
     "uuid": "9.0.0"
   },
   "optionalDependencies": {
-    "@porscheinformatik/material-addons": "file:dist/material-addons"
+    "@carcat/material-addons": "file:dist/material-addons"
   },
   "lint-staged": {
     "*.{ts,scss,css,html,json}": [

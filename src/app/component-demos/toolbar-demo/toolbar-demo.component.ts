@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {Example} from '../../components/example-viewer/example.class';
 import {ToolbarComponent} from '../../example-components/toolbar/toolbar.component';
-import {MainAction, ToolbarAction} from '@porscheinformatik/material-addons';
+import {MainAction, ToolbarAction} from '@carcat/material-addons';
 import {of} from 'rxjs';
 
 @Component({

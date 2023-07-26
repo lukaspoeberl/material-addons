@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { DataTableColumn, DataTableColumnDefinition } from '@porscheinformatik/material-addons';
+import { DataTableColumn, DataTableColumnDefinition } from '@carcat/material-addons';
 import { exampleColumns } from '../data-table-example-data/data-table-example-columns';
 import { DataTableColumnDefinitionChange } from '../../../../projects/material-addons/src/lib/data-table/data-table-column-definition';
 import { exampleData } from '../data-table-example-data/data-table-example-data';

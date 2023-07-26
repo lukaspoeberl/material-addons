@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Sort } from '@angular/material/sort';
-import { DataTableAction, DataTableColumn } from '@porscheinformatik/material-addons';
+import { DataTableAction, DataTableColumn } from '@carcat/material-addons';
 import { exampleData } from '../data-table-example-data/data-table-example-data';
 import { exampleColumns } from '../data-table-example-data/data-table-example-columns';
 

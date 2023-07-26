@@ -52,7 +52,7 @@ import {
   TableModule,
   ThrottleClickModule,
   ToolbarModule,
-} from '@porscheinformatik/material-addons';
+} from '@carcat/material-addons';
 import {ReadOnlyFieldComponent} from './example-components/read-only-field/read-only-field.component';
 import {
   ReadOnlyFieldWrapperComponent
