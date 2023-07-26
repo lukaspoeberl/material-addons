@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { DataTableAction } from '@porscheinformatik/material-addons';
+import { DataTableAction } from '@carcat/material-addons';
 import { exampleData } from '../data-table-example-data/data-table-example-data';
 import { exampleColumns } from '../data-table-example-data/data-table-example-columns';
 

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ToolbarService} from '@porscheinformatik/material-addons';
+import {ToolbarService} from '@carcat/material-addons';
 import {of} from 'rxjs';
 
 @Component({
