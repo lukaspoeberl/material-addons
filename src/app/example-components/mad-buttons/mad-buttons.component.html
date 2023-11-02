@@ -1,7 +1,15 @@
-<mad-primary-button [title]="'Save'">Save</mad-primary-button>
-<mad-outline-button [title]="'Cancel'">Cancel</mad-outline-button>
-<mad-danger-button>Delete forever</mad-danger-button>
-<mad-link-button [title]="'Add Item'">Add Item</mad-link-button>
-<mad-icon-button [title]="'Create'">
-  <mat-icon>create</mat-icon>
-</mad-icon-button>
+<div style="display: flex; flex-direction: column; gap: 1em">
+  <div style="display: flex; gap: 1em">
+    <mad-primary-button [title]="'Save'">Save</mad-primary-button>
+    <mad-outline-button [title]="'Cancel'">Cancel</mad-outline-button>
+    <mad-danger-button>Delete forever</mad-danger-button>
+    <mad-link-button [title]="'Add Item'">Add Item</mad-link-button>
+    <mad-icon-button [title]="'Create'">
+      <mat-icon>create</mat-icon>
+    </mad-icon-button>
+  </div>
+  <div style="display: flex; gap: 1em">
+    <button mat-stroked-button madButton>madButton</button>
+    <button mat-stroked-button madButton [outline]="false" [uppercase]="false" color="warn">madButton 2</button>
+  </div>
+</div>

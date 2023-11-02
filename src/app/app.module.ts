@@ -102,6 +102,8 @@ import { DataTableChildRowsComponent } from './example-components/data-table-chi
 import { MatChipsModule } from '@angular/material/chips';
 import { QuickListReactiveFormBasicComponent } from './example-components/quick-list-reactive-form-basic/quick-list-reactive-form-basic.component';
 import { QuickListReactiveFormCompactComponent } from './example-components/quick-list-reactive-form-compact/quick-list-reactive-form-compact.component';
+import { FullPageLayoutsRoutingModule } from './full-page-layouts/full-page-layouts-routing.module';
+import { MadButtonGroupComponent } from './example-components/mad-button-group/mad-button-group.component';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, './assets/i18n/');
@@ -133,6 +135,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     CardEditableComponent,
     CardReadonlyComponent,
     MadButtonsComponent,
+    MadButtonGroupComponent,
     QuickListDemoComponent,
     QuickListBasicComponent,
     QuickListExtendedComponent,
@@ -220,6 +223,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     MatSlideToggleModule,
     DataTableDevModule,
     MatChipsModule,
+    FullPageLayoutsRoutingModule,
   ],
   providers: [{ provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline', subscriptSizing: 'dynamic' } }],
   bootstrap: [AppComponent],

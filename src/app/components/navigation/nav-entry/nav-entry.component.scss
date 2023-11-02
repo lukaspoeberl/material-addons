@@ -1,18 +1,19 @@
-@use '@angular/material' as mat;
-@import 'styles';
+@use 'styles';
+@use '@porscheinformatik/material-addons/themes/common/theme';
 
+//FIXME Use a theme color (replace this everywhere) and remove styling here
 .mat-mdc-list-item {
   color: #737373;
 }
 
 .active-link {
-  //background: mat.get-color-from-palette($primary-palette, 50); TODO fix after v15 migration? https://material.angular.io/guide/theming-your-components
-  //color: mat.get-color-from-palette($primary-palette, 900); TODO fix after v15 migration? https://material.angular.io/guide/theming-your-components
+  background: map-get(theme.$primary-palette, 50);
+  color: map-get(theme.$primary-palette, 900);
 }
 
 .active-parent-link {
-  background: #fafafa;
-  //color: mat.get-color-from-palette($primary-palette, 900); TODO fix after v15 migration? https://material.angular.io/guide/theming-your-components
+  background: map-get(theme.$primary-palette, background-color);
+  color: map-get(theme.$primary-palette, 900);
 }
 
 .space-icon {
@@ -25,4 +26,9 @@
 
 .list-item-avatar {
   padding-top: 10px;
+}
+
+a {
+  color: inherit;
+  text-decoration: inherit;
 }

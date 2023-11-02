@@ -1,0 +1,47 @@
+<div style="display: flex; flex-direction: column; gap: 1em">
+  <div style="display: flex; gap: 1em">
+    <mad-button-group>
+      <button mat-flat-button madButton>madButton 1</button>
+      <button mat-stroked-button madButton>madButton 2</button>
+      <button mat-stroked-button madButton>madButton 3</button>
+    </mad-button-group>
+
+    <mad-button-group>
+      <button mat-stroked-button madButton>madButton A</button>
+      <button mat-stroked-button madButton [uppercase]="true">madButton b</button>
+    </mad-button-group>
+  </div>
+
+  <div style="display: flex; gap: 1em">
+    <mad-button-group>
+      <button mat-stroked-button madButton [disabled]="true">A</button>
+      <button mat-stroked-button madButton>B</button>
+      <button mat-stroked-button madButton>C</button>
+      <button mat-stroked-button madButton [disabled]="true">D</button>
+      <button mat-stroked-button madButton [disabled]="true">E</button>
+      <button mat-stroked-button madButton>F</button>
+    </mad-button-group>
+    <mad-button-group>
+      <button mat-stroked-button madButton>A</button>
+      <button mat-stroked-button madButton [disabled]="true">B</button>
+    </mad-button-group>
+  </div>
+
+  <div style="display: flex; gap: 1em">
+    <mad-button-group>
+      <button mat-flat-button madButton [disabled]="true">A</button>
+      <button mat-flat-button madButton>B</button>
+      <button mat-flat-button madButton>C</button>
+      <button mat-flat-button madButton [disabled]="true">D</button>
+      <button mat-flat-button madButton [disabled]="true">E</button>
+      <button mat-flat-button madButton>F</button>
+    </mad-button-group>
+
+    <div class="mad-button-group">
+      <button mat-flat-button madButton>A</button>
+      <button mat-flat-button madButton [disabled]="true">B</button>
+      <button mat-flat-button madButton>C</button>
+      <button mat-flat-button madButton [disabled]="true">D</button>
+    </div>
+  </div>
+</div>
