@@ -29,6 +29,10 @@ The versioning of material-addons is based on the Angular version. The Angular v
 
 _Hint: Changes marked as **visible change** directly affect your application during version upgrade. **Breaking**
 requires your attention during upgrade._
+- **not versioned, yet**:
+  - feat: Upgrade theming and provide carcat-style theme [#147](https://github.com/porscheinformatik/material-addons/pull/147)
+  - fix: Prettier not working [#145](https://github.com/porscheinformatik/material-addons/pull/145)
+
 - **v16.0.7**: Toolbar: Added the possibility to use a function callback for mainActions
 - **v16.0.5**: Fix data-table row actions [#144](https://github.com/porscheinformatik/material-addons/pull/144)
 - **v16.0.5**: Added Reactive form validation support for quick list [#143](https://github.com/porscheinformatik/material-addons/pull/143)
