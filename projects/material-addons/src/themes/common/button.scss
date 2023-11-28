@@ -42,9 +42,8 @@ mad-button-group {
     margin-right: 0 !important;
     
     button {
-      border-left-width: 0 !important;
       border-radius: 0 !important;
-
+      
       &:disabled:has(+ button:not(:disabled)) {
         border-right-width: 0 !important;
       }
@@ -56,7 +55,6 @@ mad-button-group {
 
     &:first-child {
       button {
-        border-left-width: var(--mdc-outlined-button-outline-width, 1px) !important;
         border-bottom-left-radius: var(--mdc-outlined-button-container-shape, var(--mdc-shape-small, 4px)) !important;
         border-top-left-radius: var(--mdc-outlined-button-container-shape, var(--mdc-shape-small, 4px)) !important;
       }
