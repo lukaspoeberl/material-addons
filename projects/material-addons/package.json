@@ -1,6 +1,6 @@
 {
   "name": "@carcat/material-addons",
-  "version": "16.0.7-carcat+1",
+  "version": "16.0.9-carcat",
   "description": "Custom theme and components for Angular Material",
   "homepage": "https://github.com/porscheinformatik/material-addons",
   "repository": {
