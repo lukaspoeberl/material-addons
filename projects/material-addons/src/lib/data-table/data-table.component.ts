@@ -1,51 +1,87 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { MatSort, Sort } from '@angular/material/sort';
-import { DataTableColumn } from './data-table-column';
-import { DataTableAction } from './data-table-action';
-import { DataTableActionType } from './data-table-action-type';
-import { SelectionModel } from '@angular/cdk/collections';
-import { v4 as uuidV4 } from 'uuid';
-import { MatDialog } from '@angular/material/dialog';
-import { DataTableColumnsModalComponent } from './data-table-columns-modal/data-table-columns-modal.component';
-import { DataTableColumnDefinition, DataTableColumnDefinitionChange, DataTableDialogData } from './data-table-column-definition';
-import { DataTableRow } from './data-table-row';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  ContentChildren,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  QueryList,
+  SimpleChanges,
+  TemplateRef,
+  ViewChild,
+} from "@angular/core";
+import { MatTableDataSource } from "@angular/material/table";
+import { MatPaginator, PageEvent } from "@angular/material/paginator";
+import { MatSort, Sort } from "@angular/material/sort";
+import { DataTableColumn } from "./data-table-column";
+import { DataTableAction } from "./data-table-action";
+import { DataTableActionType } from "./data-table-action-type";
+import { SelectionModel } from "@angular/cdk/collections";
+import { v4 as uuidV4 } from "uuid";
+import { MatDialog } from "@angular/material/dialog";
+import { DataTableColumnsModalComponent } from "./data-table-columns-modal/data-table-columns-modal.component";
+import {
+  DataTableColumnDefinition,
+  DataTableColumnDefinitionChange,
+  DataTableDialogData,
+} from "./data-table-column-definition";
+import { DataTableRow } from "./data-table-row";
+import { DataTableHeaderType } from "./data-table-header-type";
+import { DataTableFilterMode } from "./data-table-filter-mode";
+import { DataTableTemplateColumnDefinition } from "./data-table-template/data-table-template-column-definition.directive";
+import { DataTableFilterObject } from "./data-table-filter/data-table-filter-object";
+import { DataTableFilter } from "./data-table-filter/data-table-filter.directive";
+import { DataTableSelectionEmitType } from "./data-table-selection-emit-type";
+import { DataTableSelectionEmitMode } from "./data-table-selection-emit-mode";
+import { DataTableSelectionMode } from "./data-table-selection-mode";
 
 @Component({
-  selector: 'mad-data-table',
-  templateUrl: './data-table.component.html',
-  styleUrls: ['./data-table.component.scss'],
+  /* eslint-disable @angular-eslint/component-selector */
+  selector: "mad-data-table",
+  templateUrl: "./data-table.component.html",
+  styleUrls: ["./data-table.component.scss"],
 })
-export class DataTableComponent implements OnInit, AfterViewInit {
+export class DataTableComponent implements OnInit, AfterViewInit, OnChanges {
+  @Input() id: string;
+
   // Translations
-  @Input() filterLabel = 'Filter';
-  @Input() filterPlaceholder = '';
-  @Input() filterColumnsLabel = 'Filter';
-  @Input() filterColumnsPlaceHolder = 'Filter available columns';
-  @Input() noDataText = 'No matching data found';
-  @Input() columnSettingsModalTitleLabel = 'Column settings';
-  @Input() selectedLabel = 'Selected columns';
-  @Input() availableLabel = 'Available columns';
-  @Input() saveLabel = 'Save';
-  @Input() deleteLabel = 'Delete';
-  @Input() cancelLabel = 'Cancel';
-  @Input() infoTextLabel = 'Drag and drop a column to select or reorder it.';
+  @Input() filterLabel = "Filter";
+  @Input() filterPlaceholder = "";
+  @Input() filterColumnsLabel = "Filter";
+  @Input() filterColumnsPlaceHolder = "Filter available columns";
+  @Input() deleteFilterLabel = "Delete filter";
+  @Input() showEmptyTable = false;
+  @Input() noDataText = "No matching data found";
+  @Input() columnSettingsModalTitleLabel = "Column settings";
+  @Input() selectedLabel = "Selected columns";
+  @Input() availableLabel = "Available columns";
+  @Input() saveLabel = "Save";
+  @Input() deleteLabel = "Delete";
+  @Input() cancelLabel = "Cancel";
+  @Input() infoTextLabel = "Drag and drop a column to select or reorder it.";
   @Input() tableClass: string;
 
-  @Input() pageSizeOptions = [5, 10, 15];
+  @Input() translateLabels = true;
+
+  @Input() defaultSort: Sort;
   @Input() externalFilter: any;
+  @Input() pageSizeOptions = [5, 10, 15];
 
   @Input() actions: DataTableAction[] = [];
+  @Input() selectionEmitType: DataTableSelectionEmitType = "ID";
+  @Input() showDeleteFilterAction: boolean = true;
   @Input() idGenerator: any;
   @Input() parentIdGenerator: any;
   @Input() deleteDefinitionAllowed = false;
 
   @Input() useAsync = false;
-  @Input() translateLabels = true;
+  @Input() stateful = false;
 
   @Input() set filterValue(filterValue: string) {
-    const filterString = '' + filterValue;
+    const filterString = "" + filterValue;
     if (this.dataSource) {
       this.setFilterValue(filterString);
     }
@@ -66,18 +102,22 @@ export class DataTableComponent implements OnInit, AfterViewInit {
     this.columnIds.unshift(this.ACTION_COLUMN_NAME);
   }
 
-  @Input() set tableData(data: any[]) {
-    const dataArray = data ? data : [];
-    if (!this.dataSource) {
-      this.dataSource = new MatTableDataSource<any>(dataArray);
-    }
-    this.createDataMapsAndSetDisplayedDataSourceData(dataArray);
+  @Input() set tableData(data: any) {
+    this._tableData = data ? data : [];
   }
 
+  get tableData() {
+    return this._tableData;
+  }
+
+  @Input() selection: string[] | any[];
+
   @Input() set page(page: PageEvent) {
-    this.paginatorPageIndex = page.pageIndex;
-    this.paginatorPageSize = page.pageSize;
-    this.paginatorLength = page.length;
+    if (!!page) {
+      this.paginatorPageIndex = page.pageIndex;
+      this.paginatorPageSize = page.pageSize;
+      this.paginatorLength = page.length;
+    }
   }
 
   @Input() set columnDefinitions(definitions: DataTableColumnDefinition[]) {
@@ -108,7 +148,6 @@ export class DataTableComponent implements OnInit, AfterViewInit {
 
   @Input() set paginationEnabled(isPaginationEnabled: boolean) {
     this.isPaginationEnabled = isPaginationEnabled;
-    this.unsetPageSizeIfNecessary();
   }
 
   @Input() set allColumns(allColumns: DataTableColumn[]) {
@@ -118,43 +157,77 @@ export class DataTableComponent implements OnInit, AfterViewInit {
     }
   }
 
+  /**
+   * @deprecated
+   * Please use "filterMode" instead
+   */
   @Input()
   set filterEnabled(isFilterEnabled: boolean) {
-    this.isFilterEnabled = !this.useAsync ? isFilterEnabled : false;
-    this.setFilterValue(undefined);
+    this._filterMode = !this.useAsync && isFilterEnabled ? "TABLE_BASED" : "NONE";
+    this.initializeFiltering();
   }
 
   @Input()
+  set filterMode(filterMode: DataTableFilterMode) {
+    this._filterMode = this.useAsync && filterMode === "TABLE_BASED" ? "NONE" : filterMode;
+    this.initializeFiltering();
+  }
+
+  get filterMode() {
+    return this._filterMode;
+  }
+
+  @Input() selectionEmitMode: DataTableSelectionEmitMode = "NONE";
+
+  /**
+   * @deprecated
+   * This function mixes up 2 responsibilities:
+   *  - determining if actions should be displayed / handled
+   *  - determining whether actions are row based (single) or table based (batch)
+   * Please use a combination of "selectionEmitMode" and "selectionMode" instead:
+   *  - selectionEmitMode determines how selected items are handled (as part of actions, as selections or not at all)
+   *  - selectionMode determines if selected items are treated separately (single) or together (batch)
+   */
+  @Input()
   set forceMode(mode: string) {
+    if (mode === this.SINGLE || mode === this.BATCH) {
+      this.selectionEmitMode = "ON_ACTION";
+    }
+
     if (mode === this.SINGLE || mode === this.BATCH || mode === this.NONE) {
-      this._forceMode = mode;
-      this.mode = mode;
-      this.selectionModel.clear();
-      this.setActions();
+      this.initSelectionMode(mode);
     }
   }
 
+  @Input()
+  set forceSelectionMode(selectionMode: DataTableSelectionMode) {
+    this.initSelectionMode(selectionMode);
+  }
+
   @Output() sortEvent = new EventEmitter<Sort>();
+  @Output() filterEvent = new EventEmitter<DataTableFilterObject>();
   @Output() actionEvent = new EventEmitter<DataTableAction>();
+  @Output() selectionEvent = new EventEmitter<any[]>();
   @Output() pageEvent = new EventEmitter<PageEvent>();
   @Output() allColumnsEvent = new EventEmitter<void>();
   @Output() columnDefinitionChangeEvent = new EventEmitter<DataTableColumnDefinitionChange>();
   @Output() viewDefinitionChangeEvent = new EventEmitter<DataTableColumnDefinition>();
 
-  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(DataTableFilter) filter: DataTableFilter;
+  @ContentChildren(DataTableTemplateColumnDefinition) columnDefs: QueryList<DataTableTemplateColumnDefinition>;
 
-  readonly ACTION_COLUMN_NAME = '__action__';
+  readonly ACTION_COLUMN_NAME = "__action__";
   readonly SINGLE = DataTableActionType.SINGLE;
   readonly BATCH = DataTableActionType.BATCH;
   readonly NONE = DataTableActionType.NONE;
-
-  tableActions: DataTableAction[] = [];
+  tableActions: DataTableAction[][] = [];
   rowActions: DataTableAction[] = [];
   columns: DataTableColumn[] = [];
   allSelected = false;
   selected: [];
-  _forceMode: string;
+  _forceSelectionMode: string;
   rowMap = new Map<string, DataTableRow>();
   dataSource: MatTableDataSource<any[]>;
   selectionModel = new SelectionModel<string>(true);
@@ -166,9 +239,9 @@ export class DataTableComponent implements OnInit, AfterViewInit {
   allAvailableColumns: DataTableColumn[];
   selectedDefinition: DataTableColumnDefinition;
   defaultAction: DataTableAction;
-  isFilterEnabled = false;
+  _filterMode: DataTableFilterMode = "NONE";
   isPaginationEnabled = false;
-  mode = this.NONE;
+  selectionMode = this.NONE;
   isRowClickable = false;
   showColumnModal = false;
   isLoading = false;
@@ -178,18 +251,103 @@ export class DataTableComponent implements OnInit, AfterViewInit {
   paginatorPageIndex = 0;
   paginatorPageSize = 50;
 
-  constructor(private matDialog: MatDialog) {}
+  private _tableData: any[];
+
+  constructor(
+    private changeDetectorRef: ChangeDetectorRef,
+    private matDialog: MatDialog
+  ) {
+    this.dataSource = new MatTableDataSource<any>();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if ("tableData" in changes) {
+      this.createDataMapsAndSetDisplayedDataSourceData(this._tableData);
+      this.updateSelectionModel(this.getSelection("ID"));
+    }
+    if ("idGenerator" in changes || "displayedColumns" in changes) {
+      this.createDataMapsAndSetDisplayedDataSourceData(this._tableData);
+    }
+    if ("selection" in changes) {
+      this.updateSelectionModel(this.selection);
+    }
+    if ("tableData" in changes || "paginationEnabled" in changes || "useAsync" in changes) {
+      this.unsetPageSizeIfNecessary();
+    }
+    if ("forceMode" in changes || "forceSelectionMode" in changes || "actions" in changes) {
+      this.setActions();
+    }
+  }
+
+  getDataTableHeaderType(column: DataTableColumn): DataTableHeaderType {
+    if (column.isSortable && !column.isFilterable) {
+      return "SORT";
+    }
+    if (!column.isSortable && column.isFilterable) {
+      return "FILTER";
+    }
+    if (column.isSortable && column.isFilterable) {
+      return "SORT_AND_FILTER";
+    }
+    return "PLAIN";
+  }
+
+  getCustomCellTemplate(columnId: string): TemplateRef<any> | null {
+    const columnDef = this.columnDefs.find((it) => it.madColumnDef === columnId);
+    return columnDef && columnDef.cellDef ? columnDef.cellDef.getCellTemplate() : null;
+  }
+
+  private initSelectionMode(selectionMode: string) {
+    this._forceSelectionMode = selectionMode;
+    this.selectionMode = selectionMode;
+    this.selectionModel.clear();
+  }
+
+  private initializeFiltering(): void {
+    if (this._filterMode === "COLUMN_BASED") {
+      this.dataSource.filterPredicate = this.columnBasedFilterPredicate.bind(this);
+    }
+
+    this.setFilterValue("");
+  }
+
+  private columnBasedFilterPredicate(row: any, filterString: string): boolean {
+    const actualData = this.rowMap.get(row.rowId)?.actualData;
+    const displayedData = row;
+    const filters: DataTableFilterObject = JSON.parse(filterString);
+    return Object.entries(filters).every(
+      ([key, value]) => !value || this.contains(actualData, key, value) || this.contains(displayedData, key, value)
+    );
+  }
+
+  private contains(data: any, key: string, searchTerm: string): boolean {
+    return (String((data as any)[key]) ?? "").toLowerCase().includes(searchTerm.toLowerCase());
+  }
+
+  onFilteringEvent(filter: DataTableFilterObject | undefined): void {
+    if (this.useAsync) {
+      this.filterEvent.emit(filter);
+    } else {
+      this.allSelected = false;
+      this.selectionModel.clear();
+      this.setFilterValue(JSON.stringify(filter));
+    }
+
+    if (this.stateful) {
+      this.persistFilter(filter);
+    }
+  }
 
   static compare(a: Record<string, any>, b: Record<string, any>, sort: Sort): number {
     const x = a[sort.active];
     const y = b[sort.active];
-    const ascending = sort.direction === 'asc';
+    const ascending = sort.direction === "asc";
     switch (typeof x) {
-      case 'number':
+      case "number":
         return DataTableComponent.compareNumber(x, y, ascending);
-      case 'string':
+      case "string":
         return DataTableComponent.compareString(x, y, ascending);
-      case 'boolean':
+      case "boolean":
         return DataTableComponent.compareBoolean(x, y, ascending);
       default:
         // cannot compare -> return equal
@@ -230,13 +388,13 @@ export class DataTableComponent implements OnInit, AfterViewInit {
   }
 
   static isClickOnRowMenuIcon(event: MouseEvent): boolean {
-    return (event?.target as HTMLElement)?.classList.contains('mat-icon');
+    return (event?.target as HTMLElement)?.classList.contains("mat-icon");
   }
 
   ngOnInit(): void {
-    this.mode = this.getTableMode();
-    this.setActions();
-    if (this.mode !== this.NONE) {
+    this.setTableMode();
+    this.setSelectionMode();
+    if (this.selectionMode !== this.NONE) {
       this.isRowClickable = true;
       this.defaultAction = this.rowActions[0];
     }
@@ -247,6 +405,7 @@ export class DataTableComponent implements OnInit, AfterViewInit {
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     }
+    this.initializeState();
   }
 
   onColumnSettings(definition?: DataTableColumnDefinition): void {
@@ -278,18 +437,48 @@ export class DataTableComponent implements OnInit, AfterViewInit {
   }
 
   getAllDataSourceRowsOfCurrentPage(): any[] {
-    return this.dataSource?._pageData(this.dataSource.data);
+    // only use filtered data
+    return this.dataSource?._pageData(this.dataSource.filteredData);
   }
 
   getSelectedCount(actionType: string): string {
     const count = this.selectedCount;
     if (actionType !== this.BATCH || count < 2) {
-      return '';
+      return "";
     }
-    return ' (' + count + ')';
+    return " (" + count + ")";
   }
 
-  isDisabled(actionType: string): boolean {
+  updateSelectionModel(selection: string[] | any[]) {
+    this.selectionModel.clear();
+    selection?.forEach((it) => {
+      const item = this.rowMap.get(it) || [...this.rowMap.values()].find((row) => row.actualData === it);
+      if (!!item) {
+        this.updateSelection(item.id);
+      }
+    });
+  }
+
+  isHidden(action: DataTableAction): boolean {
+    return !!action.isHidden && action.isHidden(this.getSelection("DATA"));
+  }
+
+  isDisabled(action: DataTableAction): boolean {
+    return (
+      this.isDisabledForActionType(action.type) || (!!action.isDisabled && action.isDisabled(this.getSelection("DATA")))
+    );
+  }
+
+  getSelection(selectionEmitType: DataTableSelectionEmitType): any[] {
+    const selection = [];
+    for (const selected of this.selectionModel.selected) {
+      // if ID-generator is provided, return the ID, else return the ACTUAL data
+      selection.push(this.idGenerator && selectionEmitType === "ID" ? selected : this.rowMap.get(selected)?.actualData);
+    }
+    return selection;
+  }
+
+  isDisabledForActionType(actionType: string): boolean {
     switch (actionType) {
       case this.SINGLE:
         return this.selectedCount !== 1;
@@ -309,7 +498,7 @@ export class DataTableComponent implements OnInit, AfterViewInit {
       // select all rows of the current page
       this.getAllDataSourceRowsOfCurrentPage().forEach((row) => {
         if (!row.parentId) {
-          this.selectionModel.select('' + row.rowId);
+          this.selectionModel.select("" + row.rowId);
         }
       });
     }
@@ -319,30 +508,52 @@ export class DataTableComponent implements OnInit, AfterViewInit {
     return this.selectionModel.isSelected(rowId);
   }
 
+  deleteFilter(): void {
+    this.onFilteringEvent(undefined);
+    this.filter.updateFilterables(undefined);
+  }
+
+  updateFilterValue(event: Event): void {
+    this.setFilterValue((event.target as HTMLTextAreaElement).value);
+  }
+
   setFilterValue(value: string): void {
-    this.dataSource.filter = value?.trim().toLowerCase();
+    this.dataSource.filter = this._filterMode === "TABLE_BASED" ? value?.trim().toLowerCase() : value;
   }
 
   onRowEvent(event: MouseEvent, row: any, action = this.defaultAction): void {
     if (row?.parentId) {
       return;
     }
-    switch (this.mode) {
+
+    this.updateSelection(row.rowId);
+    this.processSelection(action, event);
+  }
+
+  private processSelection(action: DataTableAction, event: MouseEvent) {
+    if (
+      this.selectionEmitMode === "ON_ACTION" &&
+      this.selectionMode === "SINGLE" &&
+      !!action &&
+      !DataTableComponent.isClickOnRowMenuIcon(event)
+    ) {
+      this.emitTableAction(action);
+    }
+
+    if (this.selectionEmitMode === "ON_SELECTION") {
+      this.selectionEvent.emit(this.getSelection(this.selectionEmitType));
+    }
+  }
+
+  updateSelection(id: any) {
+    switch (this.selectionMode) {
       case this.BATCH:
-        this.selectionModel.toggle(row.rowId);
+        this.selectionModel.toggle(id);
         break;
       case this.SINGLE:
-        // emit the default action if the row (not the icon!) was clicked
-        if (!!action && !DataTableComponent.isClickOnRowMenuIcon(event)) {
-          const selected = [];
-          // if ID-generator is provided, return the ID, else return the ACTUAL data
-          selected.push(this.idGenerator ? row.rowId : this.rowMap.get(row.rowId)?.actualData);
-          this.emitTableAction(action, selected);
-        }
+        this.selectionModel.clear();
+        this.selectionModel.toggle(id);
         break;
-      default:
-        // do nothing if mode is NONE (or null)
-        return;
     }
   }
 
@@ -352,84 +563,112 @@ export class DataTableComponent implements OnInit, AfterViewInit {
     } else {
       this.internalSort(sort);
     }
+
+    if (this.stateful) {
+      this.persistSort(sort);
+    }
   }
 
   onPageEvent(event: PageEvent): void {
     if (this.useAsync) {
       this.pageEvent.emit(event);
     }
+
+    if (this.stateful) {
+      this.persistPageSize(event.pageSize);
+    }
   }
 
   onTableAction(tableAction: DataTableAction): void {
     if (!!tableAction) {
-      const selection: any[] = [];
-      for (const selected of this.selectionModel.selected) {
-        selection.push(this.idGenerator ? selected : this.rowMap.get(selected)?.actualData);
-      }
-      tableAction.selected = selection;
+      tableAction.selected = this.getSelection(this.selectionEmitType);
       this.actionEvent.emit(tableAction);
     }
   }
 
-  private emitTableAction(action: DataTableAction, selected: any[]): void {
+  private emitTableAction(action: DataTableAction): void {
     const emitAction = { ...action };
     if (action.type !== this.NONE) {
-      emitAction.selected = [...selected];
+      emitAction.selected = this.getSelection(this.selectionEmitType);
     }
     this.actionEvent.emit(emitAction);
   }
 
   private generateDisplayedDataElement(rowId: string, parentId: string, actualDataElement: any): any {
     const displayedDataElement: { [key: string]: any } = {};
-    displayedDataElement.rowId = rowId;
-    displayedDataElement.parentId = parentId;
-    for (const column of this.columns) {
-      const actualValue = actualDataElement[column.dataPropertyName];
-      displayedDataElement[column.dataPropertyName] = DataTableComponent.transformData(
+    displayedDataElement["rowId"] = rowId;
+    displayedDataElement["parentId"] = parentId;
+    // keep non displayed data in row
+    for (const key of Object.keys(actualDataElement)) {
+      const column = this.columns.find((it) => it.dataPropertyName === key);
+      const actualValue = actualDataElement[key];
+      displayedDataElement[key] = DataTableComponent.transformData(
         actualValue,
-        column.transformer,
-        column.transformerParams,
+        column?.transformer,
+        column?.transformerParams
       );
     }
     return displayedDataElement;
   }
 
-  private internalSort(sort: Sort) {
+  private internalSort(sort: Sort): void {
     const sortedData = [...this.dataSource.data].sort((a, b) => DataTableComponent.compare(a, b, sort));
     this.dataSource.data = [...sortedData];
   }
 
   private setActions(): void {
-    this.rowActions = [];
-    this.tableActions = [];
+    const rowActions = [];
+    const tableActions = [];
     for (const action of this.actions) {
-      if (this.mode !== action.hiddenInMode) {
+      if (this.selectionMode !== action.hiddenInMode) {
         switch (action.type) {
           case this.SINGLE:
-            if (this.mode === this.SINGLE) {
-              this.rowActions.push(action);
+            if (this.selectionMode === this.SINGLE) {
+              rowActions.push(action);
             } else {
-              this.tableActions.push(action);
+              tableActions.push(action);
             }
             break;
           case this.BATCH:
-            if (this.mode !== this.SINGLE) {
-              this.tableActions.push(action);
+            if (this.selectionMode !== this.SINGLE) {
+              tableActions.push(action);
             }
             break;
           default:
-            this.tableActions.push(action);
+            tableActions.push(action);
         }
       }
     }
+
+    this.setRowActions(rowActions);
+    this.setTableActions(tableActions);
+  }
+
+  private setRowActions(rowActions: DataTableAction[]): void {
+    this.rowActions = rowActions;
+  }
+
+  private setTableActions(tableActions: DataTableAction[]): void {
+    this.tableActions = Object.values(
+      tableActions.reduce((result: { [key: number]: DataTableAction[] }, current) => {
+        const index = Object.entries(result).findIndex(([, actions]) =>
+          actions.find((it) => !!current.groupId && it.groupId === current.groupId)
+        );
+        const key = index !== -1 ? index : Object.keys(result).length || 0;
+        (result[key] = result[key] || []).push(current);
+        return result;
+      }, {})
+    );
   }
 
   private createDataMapsAndSetDisplayedDataSourceData(data: any[]): void {
-    const displayedDataList = [];
+    const displayedDataList: any[] = [];
     this.rowMap.clear();
     if (data?.length > 0) {
       for (const dataEntry of data) {
-        const rowId = this.idGenerator ? this.idGenerator(dataEntry) : DataTableComponent.generateRowId();
+        const rowId = (
+          !!this.idGenerator ? this.idGenerator(dataEntry) : DataTableComponent.generateRowId()
+        ).toString();
         const parentId = this.parentIdGenerator ? this.parentIdGenerator(dataEntry) : undefined;
         const displayedDataElement = this.generateDisplayedDataElement(rowId, parentId, dataEntry);
         const dataRow: DataTableRow = {
@@ -443,7 +682,6 @@ export class DataTableComponent implements OnInit, AfterViewInit {
       }
     }
     this.dataSource.data = displayedDataList;
-    this.unsetPageSizeIfNecessary();
   }
 
   private openColumnModal(): void {
@@ -471,32 +709,104 @@ export class DataTableComponent implements OnInit, AfterViewInit {
     });
   }
 
-  private getTableMode(): string {
-    if (this._forceMode) {
-      return this._forceMode;
+  // We need this for backwards compatibility
+  private setTableMode(): void {
+    if (this.selectionEmitMode === "NONE" && this.actions && !this.actions.every((it) => it.type === "NONE")) {
+      this.selectionEmitMode = "ON_ACTION";
     }
-
-    if (!this.actions) {
-      return this.NONE;
-    }
-    const distinctActionTypes = new Set<string>();
-    for (const rowAction of this.actions) {
-      distinctActionTypes.add(rowAction.type);
-    }
-    if (distinctActionTypes.has(this.BATCH)) {
-      return this.BATCH;
-    }
-    if (distinctActionTypes.has(this.SINGLE)) {
-      return this.SINGLE;
-    }
-    return this.NONE;
   }
 
-  private unsetPageSizeIfNecessary() {
+  private setSelectionMode(): void {
+    if (this._forceSelectionMode) {
+      this.selectionMode = this._forceSelectionMode;
+    } else {
+      this.selectionMode = this.determineTreatmentMode();
+    }
+  }
+
+  private determineTreatmentMode(): "BATCH" | "SINGLE" {
+    return this.actions.find((it) => it.type === "BATCH") ? "BATCH" : "SINGLE";
+  }
+
+  private unsetPageSizeIfNecessary(): void {
     if (!this.useAsync && !this.isPaginationEnabled) {
       const dataCount = this.dataSource.data ? this.dataSource.data.length : 0;
       this.paginatorPageSize = dataCount;
       this.paginatorLength = dataCount;
+    } else if (!!this.page) {
+      this.paginatorPageSize = this.page.pageSize;
+      this.paginatorLength = this.page.length;
     }
+  }
+
+  private persistPageSize(pageSize: number): void {
+    localStorage.setItem(`${this.id}.pageSize`, JSON.stringify(pageSize));
+  }
+
+  private persistSort(sort: Sort): void {
+    localStorage.setItem(`${this.id}.sort`, JSON.stringify(sort));
+  }
+
+  private persistFilter(filter: DataTableFilterObject | undefined): void {
+    !!filter
+      ? localStorage.setItem(`${this.id}.filter`, JSON.stringify(filter))
+      : localStorage.removeItem(`${this.id}.filter`);
+  }
+
+  private initializeState(): void {
+    // only set default sort if there is no other sort persisted
+    if (!!this.defaultSort && !this.loadSort()?.direction) {
+      this.setSort(this.defaultSort);
+    }
+
+    if (this.stateful) {
+      this.initializePaginatorState();
+      this.initializeSortState();
+      this.initializeFilterState();
+    }
+
+    this.changeDetectorRef.detectChanges();
+  }
+
+  private initializePaginatorState(): void {
+    const page = this.loadPage();
+    if (!!page.pageSize) {
+      this.page = page;
+      this.paginator.page.emit(page);
+    }
+  }
+
+  private initializeSortState(): void {
+    const sort = this.loadSort();
+    if (!!sort) {
+      this.setSort(sort);
+    }
+  }
+
+  private setSort(sort: Sort): void {
+    this.sort.active = sort.active;
+    this.sort.direction = sort.direction;
+    this.sort.sortChange.emit(sort);
+  }
+
+  private initializeFilterState(): void {
+    const filter = this.loadFilter();
+    this.filter.updateFilterables(filter);
+  }
+
+  private loadPage(): PageEvent {
+    const storedPageSize = localStorage.getItem(`${this.id}.pageSize`);
+    const pageSize = !!storedPageSize ? JSON.parse(storedPageSize) : this.paginatorPageSize;
+    return { pageIndex: 0, pageSize: pageSize, length: 0 };
+  }
+
+  private loadSort(): Sort | undefined {
+    const sort = localStorage.getItem(`${this.id}.sort`);
+    return !!sort ? JSON.parse(sort) : undefined;
+  }
+
+  private loadFilter(): DataTableFilterObject | undefined {
+    const filter = localStorage.getItem(`${this.id}.filter`);
+    return !!filter ? JSON.parse(filter) : undefined;
   }
 }

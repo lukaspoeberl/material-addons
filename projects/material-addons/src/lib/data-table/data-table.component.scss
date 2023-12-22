@@ -41,16 +41,24 @@
   position: relative;
   width: 100%;
   table {
-    max-height: 100%;
     width: 100%;
+    min-height: 140px;
+    max-height: 100%;
   }
 
   th,
   td {
-    overflow: hidden;
     width: auto;
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+
+  th {
+    overflow: visible;
+  }
+
+  td {
+    overflow: hidden;
   }
 }
 
@@ -59,7 +67,7 @@
   padding-right: 24px !important;
 }
 
-.table-action {
+.table-action-group {
   margin-right: 0.5em;
   margin-bottom: 0.5em;
 }
@@ -77,6 +85,10 @@
   width: 100%;
   text-align: center;
   position: relative;
+
+  &.columnBasedFilter {
+    padding-top: 10px;
+  }
 }
 
 .mad-datatable-action-bar {
@@ -92,7 +104,7 @@
 
 .mad-datatable-spinner-wrapper {
   background-color: white;
-  opacity: .8;
+  opacity: 0.8;
   position: absolute;
   top: 0;
   left: 0;
@@ -131,5 +143,5 @@
 }
 
 .mad-dt-child-cell {
-  color: rgba(0,0,0, 0.6);
+  color: rgba(0, 0, 0, 0.6);
 }
