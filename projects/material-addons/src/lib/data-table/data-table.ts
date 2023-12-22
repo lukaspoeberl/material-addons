@@ -1,5 +1,11 @@
-export {DataTableColumn} from './data-table-column';
-export * from './data-table-columns-modal/data-table-columns-modal.component';
-export {DataTableAction} from './data-table-action';
-export {DataTableColumnDefinition} from './data-table-column-definition';
-export {DataTableComponent} from './data-table.component';
+export { DataTableColumn } from "./data-table-column";
+export * from "./data-table-columns-modal/data-table-columns-modal.component";
+export { DataTableSelectionEmitMode as SelectionEmitMode } from "./data-table-selection-emit-mode";
+export { DataTableSelectionMode } from "./data-table-selection-mode";
+export { DataTableAction } from "./data-table-action";
+export { DataTableActionType } from "./data-table-action-type";
+export { DataTableSelectionEmitType as DataTableActionEmitType } from "./data-table-selection-emit-type";
+export { DataTableColumnDefinition } from "./data-table-column-definition";
+export { DataTableComponent } from "./data-table.component";
+export { DataTableFilterMode } from "./data-table-filter-mode";
+export { DataTableFilterOption } from "./data-table-filter/data-table-filter-options";
